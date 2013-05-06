@@ -14,8 +14,7 @@ public class Ball : MonoBehaviour {
 	public Vector3 accVector;
 	public float horizontalSpeed = 2000.0F;
 	private int fallenPins;
-	
-	// Let's try this	
+		
 	public Vector3 startPos;
 	
 	// Use this for initialization
@@ -54,7 +53,7 @@ public class Ball : MonoBehaviour {
 		}
 			
 		if (Input.GetMouseButtonUp(0)) {
-			rigidbody.AddForce(Vector3.forward * -1500 * duration);
+			rigidbody.AddForce(Vector3.forward * -3000 * duration);
 		}
 			
 				/*Test:
