@@ -1,0 +1,36 @@
+
+Vorbereitung
+
+1. Git von Seite http://git-scm.com/downloads herunter laden (bei Mac nicht notwendig)
+2. auf GitHub.com einen Account anlegen
+3. download sourcetree von http://sourcetreeapp.com/
+	-> installieren + öffnen
+4. im Fenster Bookmarks ein neues Repository anlegen
+	a) URl ist :    https://github.com/Janin-K/SG.git 
+	-> warte ein bissl bis das Programm das Repository gefunden hat
+	b) destination ist einfach der Ordner (am besten ein neuer) wo du das Repository anlegst und nachher auch alle Übungsprojekte rein sollen
+	c) bestätigen
+5. in dem neu erstellten ordner ist nun unsere Übung 3 zu finden
+6. du musst mir dann noch deinen GitHub name sagen, damit ich dir nicht nur lese-, sondern auch schreibrechte geben kann 
+
+
+Ablauf
+
+wenn du daran arbeitest, es speicherst und meinst, dass dies ein guter Zwischenstand ist für alle - dann geh wieder in sourcetree
+
+1. in view häkchen-icon: in dem Fenster unten siehst du die geänderten Dateien
+2. drag & drop alle Dateien auf die Stage (oberes Fenster)
+3. oben auf commit klicken / dazu schreiben was geändert wurde damit man es nachvollziehen kann
+4. jetzt oben auf PULL klicken und warten bis alle Änderungen unten sind
+	-> wenn es Konflikte gibt dann Rechtsklick auf die Konflikdatei und dann auf solve conflict
+5. wenn keine Probleme dann PUSH klicken
+
+-> nun können alle sich die aktuelle Version herunterziehen
+(deine ist durch den PULL auch schon auf dem aktuellsten Stand)
+
+
+Extras
+
+zum Thema Serious Games gibt es hier : http://www.codeschool.com/courses#all echt interessante Mini-Kurse ... und auch 2 zum Thema Git 
+Dort wird zwar alles über Kommandozeile gemacht..... aber der Ablauf (staging-commit-pull-push) ist der gleiche!
+ 
