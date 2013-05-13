@@ -28,20 +28,29 @@ public Booster booster;
 			return;
 		}
 		
-		if (Input.GetKeyUp(KeyCode.RightArrow))
-			rigidbody.AddForce(100,0,0);
+		if (Input.GetKeyUp(KeyCode.RightArrow)) {
+			if(rigidbody.velocity.x < 5) {
+				rigidbody.velocity = new Vector3(5,0,0);
+			}
+		}
 	
-		if (Input.GetKeyUp(KeyCode.LeftArrow))
-			rigidbody.AddForce(-100,0,0);
-	
+		if (Input.GetKeyUp(KeyCode.LeftArrow)){
+			if(rigidbody.velocity.x > -5) {
+				rigidbody.velocity = new Vector3(-5,0,0);
+			}
+		}
 		//Springen: wenn Kugel Platform berührt, also touchingPlatform auf true ist und Space gedrückt wird
 		if(touchingPlatform && Input.GetButtonDown("Jump")){
-			rigidbody.AddForce(0,400,0);
+			rigidbody.velocity = new Vector3(0,10,0);;
 		}
 	}
 		
 	void OnCollisionEnter () {
 		touchingPlatform = true;
+	}
+	
+	void onTriggerEnter() {
+		Debug.Log("hit booster");
 	}
 
 	void OnCollisionExit () {
@@ -60,7 +69,7 @@ public Booster booster;
 	
 	public void AddBoost() {
 		boost = true;
-		poweruprate = booster.CountPowerupRate();
+		//poweruprate = booster.CountPowerupRate("kugel");
 		
 		//hier oder in Update noch, stärkere Kraft hinzufügen für kurze Zeit
 	}

@@ -32,9 +32,11 @@ public class Block : MonoBehaviour {
 	{
 		//Debug.Log("block: " + Kugel.poweruprate);	
 		if(endPosition - ball.rigidbody.position.x < 20) {
-			Debug.Log("kugel pwr " + Kugel.poweruprate);
-			float newX = gap * Kugel.poweruprate + endPosition;
-			float newY = (1F - Kugel.poweruprate) * 3F;
+			Debug.Log("kugel pwr " + Booster.poweruprate);
+			float newX = gap * Booster.poweruprate + endPosition;
+			float newY = (1F - Booster.poweruprate) * 4F;
+			Debug.Log("ratio: " + (1F - Booster.poweruprate));
+			Debug.Log("newY: " + newY);
 			
 			if(prevY > 0) {
 				newY -= prevY;	
