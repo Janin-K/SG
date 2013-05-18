@@ -11,24 +11,23 @@ public class Main : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		CreateBranch(null);
+		System.Collections.Generic.List<Vector2> spawnPoints = UniformPoissonDiskSampler.SampleCircle(new Vector2(0, 0), 40F, 20F);
+		
+		foreach( Vector2 element in spawnPoints) {
+			Vector2? initPos = element;
+			CreateBranch(trunkPosition: initPos);	
+		}
 	}
 	
-
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	
-	private void CreateBranch(Transform parentBranch, float segmentRotation = 0, int segmentCount = 0) {
+	private void CreateBranch(Transform parentBranch = null, float segmentRotation = 0, int segmentCount = 0, Vector2? trunkPosition = null) {
 		Transform parent;
 		Transform newBranch;
 		
-		if(parentBranch == null) {
+		if(trunkPosition != null) {
 			parent = Instantiate(branch) as Transform;
 			float y = parent.transform.FindChild("BranchCube").renderer.bounds.size.y * 0.5F;
-			parent.transform.position = Vector3.up * y;
+			parent.transform.position = new Vector3(trunkPosition.Value.x, y, trunkPosition.Value.y);
 			newBranch = parent;
 		} else {
 			parent = parentBranch;	
