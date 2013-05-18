@@ -5,8 +5,8 @@ public class Main : MonoBehaviour {
 	public Transform branch;
 	public const float SCALE = 0.7F; // scale of every new branch in relation to its parent
 	private const int MAX_NESTING_DEPTH = 5;
-	private const int Z_ROTATION_MIN = 10;
-	private const int Z_ROTATION_MAX = 55;
+	private const int Z_ROTATION_MIN = 20;
+	private const int Z_ROTATION_MAX = 60;
 
 	
 	// Use this for initialization
@@ -48,7 +48,7 @@ public class Main : MonoBehaviour {
 		}
 		
 		if(NestingDepth(newBranch) < MAX_NESTING_DEPTH) {
-			int range = 3; //Random.Range(2, 10);
+			int range = Random.Range(2, 10);
 			float nextSegment = 360 / range;
 			
 			for(int i=0; i < range; i++) {
