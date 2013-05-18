@@ -31,9 +31,6 @@ public class Main : MonoBehaviour {
 			parent = parentBranch;	
 			newBranch = Instantiate(branch) as Transform;
 			
-			float angleZ = 45F;
-			float angleY = segmentRotation;
-			
 			newBranch.transform.localScale = new Vector3(SCALE, SCALE, SCALE);
 			newBranch.transform.position = ChildPosition(parent, newBranch);
 			
