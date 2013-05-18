@@ -4,7 +4,7 @@ using System.Collections;
 public class Main : MonoBehaviour {
 	public Transform branch;
 	public const float SCALE = 0.5F; // scale of every new branch in relation to its parent
-	private const int MAX_NESTING_DEPTH = 2;
+	private const int MAX_NESTING_DEPTH = 5;
 	
 	// Use this for initialization
 	void Start () {
@@ -45,35 +45,33 @@ public class Main : MonoBehaviour {
 			
 			for(int i=0; i < range; i++) {
 				float rot = nextSegment * i;
-				CreateBranch(parent, rot);
+				CreateBranch(newBranch, rot);
 			}		
 		}
 		 
 		
 	}
 	
-	private Vector3 ParentTop(Transform parent) {
-		Transform parentChild = parent.FindChild("BranchCube");
+	private Vector3 ParentTop(Transform parentContainer) {
+		Transform parentObject = parentContainer.FindChild("BranchCube");
+		Vector3	startposition = parentContainer.transform.position;
 		
-		float x = parent.position.x;
-		float y = parentChild.renderer.bounds.size.y;
-		float z = parent.position.z;
+		Vector3 endposition = startposition + (parentContainer.transform.up.normalized * parentObject.transform.renderer.bounds.size.y / 2);
 		
-		Vector3 vector = new Vector3(x, y, z);
-		return vector;
+		return endposition;
 		
 	}
 	
-	private Vector3 ChildPosition(Transform parent, Transform newBranch) {
-		Transform parentChild = parent.FindChild("BranchCube");
-		Transform newBranchChild = newBranch.FindChild("BranchCube");
+	private Vector3 ChildPosition(Transform parentContainer, Transform newBranch) {
+		Transform newBranchObject = newBranch.FindChild("BranchCube");
 		
-		float x = parent.position.x;
-		float y = parentChild.renderer.bounds.size.y + newBranchChild.renderer.bounds.size.y * 0.5F;
-		float z = parent.position.z;
-		
-		Vector3 vector = new Vector3(x, y, z);
-		return vector;
+		Vector3 center = ParentTop(parentContainer);
+		Debug.Log ("center" + center);
+		Debug.Log("magnitude" + newBranchObject.transform.up.magnitude);
+		Vector3 newPosition = center + newBranchObject.transform.up.normalized * newBranchObject.transform.renderer.bounds.size.y/2;
+		Debug.Log ("newPos" + newPosition);
+
+		return newPosition;
 		
 	}
 	
