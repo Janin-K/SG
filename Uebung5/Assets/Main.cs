@@ -3,12 +3,15 @@ using System.Collections;
 
 public class Main : MonoBehaviour {
 	public Transform branch;
-	public const float SCALE = 0.5F; // scale of every new branch in relation to its parent
+	public const float SCALE = 0.7F; // scale of every new branch in relation to its parent
 	private const int MAX_NESTING_DEPTH = 5;
+	private const int Z_ROTATION_MIN = 10;
+	private const int Z_ROTATION_MAX = 55;
+
 	
 	// Use this for initialization
 	void Start () {
-		CreateBranch(null, 0);
+		CreateBranch(null);
 	}
 	
 
@@ -18,7 +21,7 @@ public class Main : MonoBehaviour {
 	
 	}
 	
-	private void CreateBranch(Transform parentBranch, float segmentRotation) {
+	private void CreateBranch(Transform parentBranch, float segmentRotation = 0, int segmentCount = 0) {
 		Transform parent;
 		Transform newBranch;
 		
@@ -31,11 +34,16 @@ public class Main : MonoBehaviour {
 			parent = parentBranch;	
 			newBranch = Instantiate(branch) as Transform;
 			
-			newBranch.transform.localScale = new Vector3(SCALE, SCALE, SCALE);
+			newBranch.transform.localScale = parent.lossyScale * SCALE;
 			newBranch.transform.position = ChildPosition(parent, newBranch);
 			
-			newBranch.transform.RotateAround(ParentTop(parent), Vector3.forward, 45);
-			newBranch.transform.RotateAround(ParentTop(parent), Vector3.up, segmentRotation);
+			
+			float variance = 360f/segmentCount;
+			float delta = variance * 0.4f;
+			float yRotation = segmentRotation + Random.Range(-delta, delta);
+			
+			newBranch.transform.RotateAround(ParentTop(parent), Vector3.forward, Random.Range(Z_ROTATION_MIN, Z_ROTATION_MAX));
+			newBranch.transform.RotateAround(ParentTop(parent), Vector3.up, yRotation);
 			newBranch.transform.parent = parent.transform;
 		}
 		
@@ -44,8 +52,8 @@ public class Main : MonoBehaviour {
 			float nextSegment = 360 / range;
 			
 			for(int i=0; i < range; i++) {
-				float rot = nextSegment * i;
-				CreateBranch(newBranch, rot);
+				float rotation = nextSegment * i;
+				CreateBranch(newBranch, rotation, range);
 			}		
 		}
 		 
@@ -66,10 +74,10 @@ public class Main : MonoBehaviour {
 		Transform newBranchObject = newBranch.FindChild("BranchCube");
 		
 		Vector3 center = ParentTop(parentContainer);
-		Debug.Log ("center" + center);
-		Debug.Log("magnitude" + newBranchObject.transform.up.magnitude);
+		//Debug.Log ("center" + center);
+		//Debug.Log("magnitude" + newBranchObject.transform.up.magnitude);
 		Vector3 newPosition = center + newBranchObject.transform.up.normalized * newBranchObject.transform.renderer.bounds.size.y/2;
-		Debug.Log ("newPos" + newPosition);
+		//Debug.Log ("newPos" + newPosition);
 
 		return newPosition;
 		
