@@ -104,7 +104,7 @@ public static class UniformPoissonDiskSampler
             double yr = settings.TopLeft.y + settings.Dimensions.y * d;
 
             var p = new Vector2((float) xr, (float) yr);
-            if (settings.RejectionSqDistance != null && Vector2.DistanceSquared(settings.Center, p) > settings.RejectionSqDistance)
+            if (settings.RejectionSqDistance != null && Mathf.Pow(Vector2.Distance(settings.Center, p), 2) > settings.RejectionSqDistance)
                 continue;
             added = true;
 
@@ -124,7 +124,7 @@ public static class UniformPoissonDiskSampler
 
         if (q.x >= settings.TopLeft.x && q.x < settings.LowerRight.x && 
             q.y > settings.TopLeft.y && q.y < settings.LowerRight.y &&
-            (settings.RejectionSqDistance == null || Vector2.DistanceSquared(settings.Center, q) <= settings.RejectionSqDistance))
+            (settings.RejectionSqDistance == null || Mathf.Pow(Vector2.Distance(settings.Center, q),2) <= settings.RejectionSqDistance))
 	    {
             var qIndex = Denormalize(q, settings.TopLeft, settings.CellSize);
 		    var tooClose = false;
@@ -147,10 +147,10 @@ public static class UniformPoissonDiskSampler
 
     static Vector2 GenerateRandomAround(Vector2 center, float minimumDistance)
     {
-        float d = RandomHelper.Random.NextDouble();
+        float d = (float)RandomHelper.Random.NextDouble();
         float radius = minimumDistance + minimumDistance * d;
 
-        d = RandomHelper.Random.NextDouble();
+        d = (float)RandomHelper.Random.NextDouble();
         float angle = MathHelper.TwoPi * d;
 
         float newX = radius * Mathf.Sin(angle);
@@ -167,7 +167,7 @@ public static class UniformPoissonDiskSampler
 
 public static class RandomHelper
 {
-    public static readonly System.Random Random = new Sytem.Random();
+    public static readonly System.Random Random = new System.Random();
 }
 
 public static class MathHelper
