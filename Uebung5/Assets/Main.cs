@@ -4,7 +4,7 @@ using System.Collections;
 public class Main : MonoBehaviour {
 	public Transform branch;
 	public const float SCALE = 0.7F; // scale of every new branch in relation to its parent
-	private const int MAX_NESTING_DEPTH = 5;
+	private const int MAX_NESTING_DEPTH = 4;
 	private const int Z_ROTATION_MIN = 20;
 	private const int Z_ROTATION_MAX = 60;
 
@@ -62,8 +62,8 @@ public class Main : MonoBehaviour {
 	private Vector3 ParentTop(Transform parentContainer) {
 		Transform parentObject = parentContainer.FindChild("BranchCube");
 		Vector3	startposition = parentContainer.transform.position;
-		
-		Vector3 endposition = startposition + (parentContainer.transform.up.normalized * parentObject.transform.renderer.bounds.size.y / 2);
+		float correction = 0.01F * parentContainer.transform.eulerAngles.z;
+		Vector3 endposition = startposition + (parentContainer.transform.up.normalized * (parentObject.renderer.bounds.size.y / 2  + correction));
 		
 		return endposition;
 		
@@ -73,9 +73,8 @@ public class Main : MonoBehaviour {
 		Transform newBranchObject = newBranch.FindChild("BranchCube");
 		
 		Vector3 center = ParentTop(parentContainer);
-		//Debug.Log ("center" + center);
-		//Debug.Log("magnitude" + newBranchObject.transform.up.magnitude);
-		Vector3 newPosition = center + newBranchObject.transform.up.normalized * newBranchObject.transform.renderer.bounds.size.y/2;
+		float correction = 0.01F * newBranch.transform.eulerAngles.z;
+		Vector3 newPosition = center + newBranchObject.transform.up.normalized * (newBranchObject.renderer.bounds.size.y / 2 + correction);
 		//Debug.Log ("newPos" + newPosition);
 
 		return newPosition;
