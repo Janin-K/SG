@@ -11,12 +11,13 @@ public class Main : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		System.Collections.Generic.List<Vector2> spawnPoints = UniformPoissonDiskSampler.SampleCircle(new Vector2(0, 0), 40F, 20F);
+		System.Collections.Generic.List<Vector2> spawnPoints = UniformPoissonDiskSampler.SampleCircle(new Vector2(0, 0), 250F, 50F);
 		
 		foreach( Vector2 element in spawnPoints) {
 			Vector2? initPos = element;
 			CreateBranch(trunkPosition: initPos);	
 		}
+			
 	}
 	
 	
@@ -62,9 +63,18 @@ public class Main : MonoBehaviour {
 	private Vector3 ParentTop(Transform parentContainer) {
 		Transform parentObject = parentContainer.FindChild("BranchCube");
 		Vector3	startposition = parentContainer.transform.position;
-		float correction = 0.01F * parentContainer.transform.eulerAngles.z;
-		Vector3 endposition = startposition + (parentContainer.transform.up.normalized * (parentObject.renderer.bounds.size.y / 2  + correction));
+		Vector3 endposition;
 		
+		if(parentContainer.transform.eulerAngles.z < 40){
+			endposition = startposition + (parentContainer.transform.up.normalized * (parentObject.renderer.bounds.size.y / 2));
+		}
+		else
+		{
+			float rotation_correction = parentContainer.transform.eulerAngles.z * 0.085f * (parentObject.renderer.bounds.size.y *0.05f);
+			endposition = startposition + (parentContainer.transform.up.normalized * (parentObject.renderer.bounds.size.y / 2 + rotation_correction));
+		}
+		
+
 		return endposition;
 		
 	}
@@ -73,10 +83,7 @@ public class Main : MonoBehaviour {
 		Transform newBranchObject = newBranch.FindChild("BranchCube");
 		
 		Vector3 center = ParentTop(parentContainer);
-		float correction = 0.01F * newBranch.transform.eulerAngles.z;
-		Vector3 newPosition = center + newBranchObject.transform.up.normalized * (newBranchObject.renderer.bounds.size.y / 2 + correction);
-		//Debug.Log ("newPos" + newPosition);
-
+		Vector3 newPosition = center + newBranchObject.transform.up.normalized * (newBranchObject.renderer.bounds.size.y / 2);
 		return newPosition;
 		
 	}
