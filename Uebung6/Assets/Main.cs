@@ -50,11 +50,13 @@ public class Main : MonoBehaviour {
 			
 			if (GUI.Button(new Rect(10, 30, 130, 20), "Connect to a Server"))
 			{
-       			Network.Connect(connectionIP, connectionPort);
+				Debug.Log("connect as client");
+       			Net.Connect(Net.AS_CLIENT);
 			}
 			if (GUI.Button(new Rect(10, 50, 130, 20), "Start new Server"))
 			{
-    			Network.InitializeServer(32, connectionPort, false);
+				Debug.Log("connect as server");
+    			Net.Connect(Net.AS_SERVER);
 			}
 		}
 		else if (Network.peerType == NetworkPeerType.Client)
