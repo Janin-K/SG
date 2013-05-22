@@ -13,10 +13,12 @@ public class Main : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		CreateScene();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+	
 	
 	}
 	
@@ -41,15 +43,16 @@ public class Main : MonoBehaviour {
 	
 	void OnGUI()
 	{
+
 		 if (Network.peerType == NetworkPeerType.Disconnected)
 		{
 			GUI.Label(new Rect(10, 10, 200, 20), "You are Disconnected");
 			
-			if (GUI.Button(new Rect(10, 30, 120, 20), "Connect to a Server"))
+			if (GUI.Button(new Rect(10, 30, 130, 20), "Connect to a Server"))
 			{
        			Network.Connect(connectionIP, connectionPort);
 			}
-			if (GUI.Button(new Rect(10, 50, 120, 20), "Start new Server"))
+			if (GUI.Button(new Rect(10, 50, 130, 20), "Start new Server"))
 			{
     			Network.InitializeServer(32, connectionPort, false);
 			}
@@ -63,5 +66,5 @@ public class Main : MonoBehaviour {
         	}
     	}
 	}
-	
+
 }
