@@ -2,7 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class CollisionDetection : MonoBehaviour {
-
+	
+	public Transform BallPrefab;
+	private Transform Ball;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -15,23 +18,33 @@ public class CollisionDetection : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider Aus)
 	{
-		Debug.Log ("huhu");
-		Debug.Log("collider" + Aus);
+	if(Aus.name == "colliderServer")
+		{
+			Main.pointsServer+=1;
+			respawn(-1);
+		}
 		
-		
-		
-		
-		//if(Aus.rigidbody == Colrechts){
-		//	Debug.Log("rechts");
-			//pointsServer +=1;
-			//Destroy(Ball);
-			//respawn(-1);
-		//}
-		//if(Aus.rigidbody == Collinks){
-		//	Debug.Log("links");
-			//pointsClient +=1;
-			//Destroy(Ball);
-			//respawn(1);
-		//}
+	if(Aus.name == "colliderClient")
+		{
+			Main.pointsClient +=1;
+			respawn(1);
+		}
 	}
+	
+	public void respawn(int Richtung)
+	{
+		Debug.Log ("respawn aufruf");
+		Vector3 posBall = new Vector3(0,0,0);
+		this.transform.position = posBall;
+		
+		
+		this.transform.rigidbody.velocity = Vector3.zero;
+		this.transform.rigidbody.angularVelocity = Vector3.zero;
+		this.transform.rigidbody.inertiaTensorRotation = Quaternion.identity;
+		
+		int x = 500 * Richtung;
+		Debug.Log("x " + x);
+		this.transform.rigidbody.AddForce(new Vector3(500,0,0));
+	}
+
 }

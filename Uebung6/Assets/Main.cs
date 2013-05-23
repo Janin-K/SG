@@ -13,9 +13,11 @@ public class Main : MonoBehaviour {
 	private Transform Ball;
 	private Transform Colrechts;
 	private Transform Collinks;
-	private int pointsClient;
-	private int	pointsServer;
+	public static int pointsClient;
+	public static int	pointsServer;
 	
+	public const string COLLIDER_SERVER = "colliderServer";
+	public const string COLLIDER_CLIENT = "colliderClient";
 	
 	// Use this for initialization
 	void Start () {
@@ -65,20 +67,16 @@ public class Main : MonoBehaviour {
 		
 		Colrechts = Instantiate(ColliderPrefab) as Transform;
 		Colrechts.transform.position = new Vector3(9.5f,0,0);
+		Colrechts.name = COLLIDER_SERVER;
 		
 		Collinks = Instantiate(ColliderPrefab) as Transform;
 		Collinks.transform.position = new Vector3(-9.5f,0,0);
+		Collinks.name = COLLIDER_CLIENT;
 	}
-	
-	// funktioniert noch nicht :-(
-	// weiss nicht wie ich die Collider unterscheiden kann
-	//tut gar nichts im Moment
-	
 	
 	
 	void OnPlayerConnected()
 	{
-
 		Vector3 pos1 = new Vector3(-8.5f,0,0);
 		Quaternion rot1 = new Quaternion(0,0,0,0);
 		player1 = Network.Instantiate(PlayerPrefab,pos1,rot1,0) as Transform;
@@ -87,9 +85,6 @@ public class Main : MonoBehaviour {
 		Quaternion rotBall = new Quaternion(0,0,0,0);
 		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
 		Ball.transform.rigidbody.AddForce(new Vector3(500,50,0));
-		//Ball.name = "Ball";
-		
-		
 	}
 	
 	void OnConnectedToServer()
@@ -141,14 +136,4 @@ public class Main : MonoBehaviour {
 		}
 	}
 	
-	// -1 ist links und 1 ist rechts
-	public void respawn(int Richtung)
-	{
-		Vector3 posBall = new Vector3(0,0,0);
-		Quaternion rotBall = new Quaternion(0,0,0,0);
-		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
-		int x = 500 * Richtung;
-		Ball.transform.rigidbody.AddForce(new Vector3(x,0,0));
-	}
-
 }
