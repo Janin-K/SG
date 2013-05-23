@@ -100,7 +100,7 @@ public class Main : MonoBehaviour {
 		Vector3 posBall = new Vector3(0,0,0);
 		Quaternion rotBall = new Quaternion(0,0,0,0);
 		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
-		Ball.transform.rigidbody.AddForce(new Vector3(500,0,0));
+		Ball.transform.rigidbody.AddForce(new Vector3(500,50,0));
 		
 		
 	}
