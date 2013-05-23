@@ -73,27 +73,13 @@ public class Main : MonoBehaviour {
 	// funktioniert noch nicht :-(
 	// weiss nicht wie ich die Collider unterscheiden kann
 	//tut gar nichts im Moment
-	void OnCollisionEnter(Collision Aus)
-	{
-		if(Aus.rigidbody == Colrechts){
-			Debug.Log("rechts");
-			pointsServer +=1;
-			Destroy(Ball);
-			respawn(-1);
-		}
-		if(Aus.rigidbody == Collinks){
-			Debug.Log("links");
-			pointsClient +=1;
-			Destroy(Ball);
-			respawn(1);
-		}
-	}
+	
 	
 	
 	void OnPlayerConnected()
 	{
 
-		Vector3 pos1 = new Vector3(-9,0,0);
+		Vector3 pos1 = new Vector3(-8.5f,0,0);
 		Quaternion rot1 = new Quaternion(0,0,0,0);
 		player1 = Network.Instantiate(PlayerPrefab,pos1,rot1,0) as Transform;
 		
@@ -101,13 +87,14 @@ public class Main : MonoBehaviour {
 		Quaternion rotBall = new Quaternion(0,0,0,0);
 		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
 		Ball.transform.rigidbody.AddForce(new Vector3(500,50,0));
+		//Ball.name = "Ball";
 		
 		
 	}
 	
 	void OnConnectedToServer()
 	{
-		Vector3 pos2 = new Vector3(9,0,0);
+		Vector3 pos2 = new Vector3(8.5f,0,0);
 		Quaternion rot2 = new Quaternion(0,0,0,0);
 		player2 = Network.Instantiate(PlayerPrefab,pos2,rot2,0) as Transform;
 	}
