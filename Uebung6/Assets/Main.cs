@@ -15,6 +15,7 @@ public class Main : MonoBehaviour {
 	private Transform Collinks;
 	public static int pointsClient;
 	public static int	pointsServer;
+	public static string hostIp = "127.0.0.1";
 	
 	public const string COLLIDER_SERVER = "colliderServer";
 	public const string COLLIDER_CLIENT = "colliderClient";
@@ -129,14 +130,17 @@ public class Main : MonoBehaviour {
 		{
 			GUI.Label(new Rect(10, 10, 200, 20), "You are Disconnected");
 			
+			hostIp = GUI.TextField(new Rect(10,50,130,20),hostIp);
+			
 			if (GUI.Button(new Rect(10, 30, 130, 20), "Connect to a Server"))
 			{
-       			Net.Connect(Net.AS_CLIENT);				
+				Net.Connect(Net.AS_CLIENT,hostIp);				
 			}
-			if (GUI.Button(new Rect(10, 50, 130, 20), "Start new Server"))
+			if (GUI.Button(new Rect(10, 70, 130, 20), "Start new Server"))
 			{
-    			Net.Connect(Net.AS_SERVER);
+    			Net.Connect(Net.AS_SERVER,hostIp);
 			}
+			
 		}
 		else
     	{
