@@ -33,7 +33,6 @@ public class CollisionDetection : MonoBehaviour {
 	
 	public void respawn(int Richtung)
 	{
-		Debug.Log ("respawn aufruf");
 		Vector3 posBall = new Vector3(0,0,0);
 		this.transform.position = posBall;
 		
@@ -43,8 +42,7 @@ public class CollisionDetection : MonoBehaviour {
 		this.transform.rigidbody.inertiaTensorRotation = Quaternion.identity;
 		
 		int x = 500 * Richtung;
-		Debug.Log("x " + x);
-		this.transform.rigidbody.AddForce(new Vector3(500,0,0));
+		this.transform.rigidbody.AddForce(new Vector3(x,0,0));
 	}
 
 }

@@ -19,16 +19,22 @@ public class Main : MonoBehaviour {
 	public const string COLLIDER_SERVER = "colliderServer";
 	public const string COLLIDER_CLIENT = "colliderClient";
 	
+	public int lastValueServer;
+	public int lastValueClient;
+	
 	// Use this for initialization
 	void Start () {
-		CreateScene();
 		pointsClient = 0;
 		pointsServer = 0;
+		
+		lastValueClient = 0;
+		lastValueServer = 0;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
 		
 		if (Network.peerType == NetworkPeerType.Client)
 		{
@@ -55,25 +61,28 @@ public class Main : MonoBehaviour {
 			
 		}
 		
-	}
+			if(lastValueClient < pointsClient){
+				lastValueClient = pointsClient;
+				networkView.RPC("SetPointsClient",RPCMode.All, pointsClient);
+			}
+			
+			if(lastValueServer < pointsServer){
+				lastValueServer = pointsServer;
+				networkView.RPC("SetPointsServer",RPCMode.All, pointsServer);
+			}
+		
+	}	
+		
+	[RPC]
+	void SetPointsClient(int pointsClientfromServer){
+			pointsClient = pointsClientfromServer;
 	
-	public void CreateScene()
-	{
-		Wall1 = Instantiate(WallPrefab) as Transform;
-		Wall1.transform.position = new Vector3(0,4,0);
-		
-		Wall2 = Instantiate(WallPrefab) as Transform;
-		Wall2.transform.position = new Vector3(0,-4,0);
-		
-		Colrechts = Instantiate(ColliderPrefab) as Transform;
-		Colrechts.transform.position = new Vector3(9.5f,0,0);
-		Colrechts.name = COLLIDER_SERVER;
-		
-		Collinks = Instantiate(ColliderPrefab) as Transform;
-		Collinks.transform.position = new Vector3(-9.5f,0,0);
-		Collinks.name = COLLIDER_CLIENT;
 	}
+	[RPC]
+	void SetPointsServer(int pointsServerfromServer){
+			pointsServer = pointsServerfromServer;
 	
+	}
 	
 	void OnPlayerConnected()
 	{
@@ -85,6 +94,16 @@ public class Main : MonoBehaviour {
 		Quaternion rotBall = new Quaternion(0,0,0,0);
 		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
 		Ball.transform.rigidbody.AddForce(new Vector3(500,50,0));
+		
+		Wall1 = Network.Instantiate(WallPrefab,new Vector3(0,4,0),new Quaternion(0,0,0,0),0) as Transform;
+		
+		Wall2 = Network.Instantiate(WallPrefab,new Vector3(0,-4,0),new Quaternion(0,0,0,0),0) as Transform;
+		
+		Colrechts = Network.Instantiate(ColliderPrefab,new Vector3(9.5f,0,0),new Quaternion(0,0,0,0),0) as Transform;
+		Colrechts.name = COLLIDER_SERVER;
+		
+		Collinks = Network.Instantiate(ColliderPrefab,new Vector3(-9.5f,0,0),new Quaternion(0,0,0,0),0) as Transform;
+		Collinks.name = COLLIDER_CLIENT;
 	}
 	
 	void OnConnectedToServer()
@@ -112,12 +131,10 @@ public class Main : MonoBehaviour {
 			
 			if (GUI.Button(new Rect(10, 30, 130, 20), "Connect to a Server"))
 			{
-				Debug.Log("connect as client");
        			Net.Connect(Net.AS_CLIENT);				
 			}
 			if (GUI.Button(new Rect(10, 50, 130, 20), "Start new Server"))
 			{
-				Debug.Log("connect as server");
     			Net.Connect(Net.AS_SERVER);
 			}
 		}
