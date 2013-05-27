@@ -10,7 +10,7 @@ public class Main : MonoBehaviour {
 	private Transform player2;
 	private Transform Wall1;
 	private Transform Wall2;
-	private Transform Ball;
+	public Transform Ball;
 	private Transform Colrechts;
 	private Transform Collinks;
 	public static int pointsClient;
@@ -41,11 +41,11 @@ public class Main : MonoBehaviour {
 		{
 			if(Input.GetKey("up"))
 			{
-				player2.transform.position += Vector3.up * 0.1f;
+				player2.transform.position += Vector3.up * 0.2f;
 			}
 			if(Input.GetKey("down"))
 			{
-				player2.transform.position += Vector3.down * 0.1f;	
+				player2.transform.position += Vector3.down * 0.2f;	
 			}
 		
 		}
@@ -53,24 +53,26 @@ public class Main : MonoBehaviour {
 		{
 			if(Input.GetKey("up"))
 			{
-				player1.transform.position += Vector3.up * 0.1f;
+				player1.transform.position += Vector3.up * 0.2f;
 			}
 			if(Input.GetKey("down"))
 			{
-				player1.transform.position += Vector3.down * 0.1f;	
+				player1.transform.position += Vector3.down * 0.2f;	
 			}
 			
 		}
 		
-			if(lastValueClient < pointsClient){
-				lastValueClient = pointsClient;
-				networkView.RPC("SetPointsClient",RPCMode.All, pointsClient);
-			}
-			
-			if(lastValueServer < pointsServer){
-				lastValueServer = pointsServer;
-				networkView.RPC("SetPointsServer",RPCMode.All, pointsServer);
-			}
+		if(lastValueClient < pointsClient){
+			lastValueClient = pointsClient;
+			networkView.RPC("SetPointsClient",RPCMode.All, pointsClient);
+		}
+					
+		if(lastValueServer < pointsServer){
+			lastValueServer = pointsServer;
+			networkView.RPC("SetPointsServer",RPCMode.All, pointsServer);
+		}
+				
+		
 		
 	}	
 		
@@ -84,6 +86,14 @@ public class Main : MonoBehaviour {
 			pointsServer = pointsServerfromServer;
 	
 	}
+	/*
+	[RPC]
+	void DestroyBallOfClient(GameObject BallToDestroyOfClient)
+	{
+		Destroy (BallToDestroyOfClient);
+	}
+	*/
+	
 	
 	void OnPlayerConnected()
 	{
@@ -93,8 +103,10 @@ public class Main : MonoBehaviour {
 		
 		Vector3 posBall = new Vector3(0,0,0);
 		Quaternion rotBall = new Quaternion(0,0,0,0);
+		int yForce = Random.Range (-150,150);
 		Ball = Network.Instantiate(BallPrefab,posBall,rotBall,0) as Transform;
-		Ball.transform.rigidbody.AddForce(new Vector3(500,50,0));
+		Ball.transform.rigidbody.AddForce(new Vector3(500,yForce,0));
+		//Ball.tag = "Ball";
 		
 		Wall1 = Network.Instantiate(WallPrefab,new Vector3(0,4,0),new Quaternion(0,0,0,0),0) as Transform;
 		
@@ -118,6 +130,7 @@ public class Main : MonoBehaviour {
 	{
 		Time.timeScale = 0.0f;
 	}
+	
 	
 	void OnGUI()
 	{

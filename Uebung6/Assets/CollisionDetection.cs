@@ -42,7 +42,8 @@ public class CollisionDetection : MonoBehaviour {
 		this.transform.rigidbody.inertiaTensorRotation = Quaternion.identity;
 		
 		int x = 500 * Richtung;
-		this.transform.rigidbody.AddForce(new Vector3(x,0,0));
+		int y = Random.Range (-150,150);
+		this.transform.rigidbody.AddForce(new Vector3(x,y,0));
 	}
 
 }

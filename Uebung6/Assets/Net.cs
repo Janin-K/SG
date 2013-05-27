@@ -15,7 +15,7 @@ public static class Net
 			Network.Connect(hostIp, hostPort);
 		} else {
 			// TODO: set # connections properly
-			Network.InitializeServer(3, hostPort, false);	
+			Network.InitializeServer(1, hostPort, false);	
 		}
 		
 	}
