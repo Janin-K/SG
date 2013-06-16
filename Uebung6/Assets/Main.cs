@@ -97,7 +97,7 @@ public class Main : MonoBehaviour {
 	
 	void OnPlayerConnected()
 	{
-		Vector3 pos1 = new Vector3(-8.5f,0,0);
+		Vector3 pos1 = new Vector3(-7.5f,0,0);
 		Quaternion rot1 = new Quaternion(0,0,0,0);
 		player1 = Network.Instantiate(PlayerPrefab,pos1,rot1,0) as Transform;
 		
@@ -112,16 +112,16 @@ public class Main : MonoBehaviour {
 		
 		Wall2 = Network.Instantiate(WallPrefab,new Vector3(0,-4,0),new Quaternion(0,0,0,0),0) as Transform;
 		
-		Colrechts = Network.Instantiate(ColliderPrefab,new Vector3(9.5f,0,0),new Quaternion(0,0,0,0),0) as Transform;
+		Colrechts = Network.Instantiate(ColliderPrefab,new Vector3(8f,0,0),new Quaternion(0,0,0,0),0) as Transform;
 		Colrechts.name = COLLIDER_SERVER;
 		
-		Collinks = Network.Instantiate(ColliderPrefab,new Vector3(-9.5f,0,0),new Quaternion(0,0,0,0),0) as Transform;
+		Collinks = Network.Instantiate(ColliderPrefab,new Vector3(-8f,0,0),new Quaternion(0,0,0,0),0) as Transform;
 		Collinks.name = COLLIDER_CLIENT;
 	}
 	
 	void OnConnectedToServer()
 	{
-		Vector3 pos2 = new Vector3(8.5f,0,0);
+		Vector3 pos2 = new Vector3(7.5f,0,0);
 		Quaternion rot2 = new Quaternion(0,0,0,0);
 		player2 = Network.Instantiate(PlayerPrefab,pos2,rot2,0) as Transform;
 	}
